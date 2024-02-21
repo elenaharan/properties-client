@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import Header from "./components/Header";
+import Main from "./components/Main";
 
 function App() {
   const [properties, setProperties] = useState([]);
@@ -56,120 +58,15 @@ function App() {
 
   return (
     <div className="App">
-      <header>
-        <h1>Welcome to our property website!</h1>
-      </header>
-      <main className="main">
-        <div className="button-container">
-          <button onClick={() => setShowModal(true)}>Add Property</button>
-        </div>
-        {loading ? (
-          <p>Loading...</p>
-        ) : properties.length === 0 ? (
-          <p>No properties found</p>
-        ) : (
-          <PropertyList properties={properties} />
-        )}
-        {showModal && (
-          <PropertyForm
-            onSubmit={handleAddProperty}
-            onClose={() => setShowModal(false)}
-            showModal={showModal}
-          />
-        )}
-      </main>
+      <Header />
+      <Main
+        properties={properties}
+        handleAddProperty={handleAddProperty}
+        setShowModal={setShowModal}
+        loading={loading}
+        showModal={showModal}
+      />
     </div>
-  );
-}
-
-function PropertyList({ properties }: any) {
-  return (
-    <ul className="properties">
-      {properties.map((property: any) => (
-        <PropertyCard property={property} />
-      ))}
-    </ul>
-  );
-}
-
-function PropertyCard({ property }: any) {
-  if (!property) return null;
-
-  const formattedPrice = new Intl.NumberFormat("en-GB", {
-    style: "currency",
-    currency: "GBP",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(property.Price);
-
-  return (
-    <li className="property">
-      <img src={property.Image} alt="Advertised property" />
-      <div>
-        <p>{property.Address}</p>
-        <span className="price">{formattedPrice}</span>
-      </div>
-    </li>
-  );
-}
-
-function PropertyForm({ onSubmit, onClose, showModal }: any) {
-  const [formData, setFormData] = useState({
-    Image: "",
-    Address: "",
-    Price: "",
-  });
-
-  const handleChange = (e: any) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    onSubmit(formData);
-  };
-
-  return (
-    <>
-      <div className={`overlay ${showModal ? "" : "hidden"}`}></div>
-      <div className={`modal ${showModal ? "show" : ""}`}>
-        <div className="modal-content">
-          <span className="close" onClick={onClose}>
-            &times;
-          </span>
-          <h2>Add Property</h2>
-          <form onSubmit={handleSubmit} className="form">
-            <label>Image URL</label>
-            <input
-              type="text"
-              name="Image"
-              value={formData.Image}
-              onChange={handleChange}
-              placeholder="Enter image url"
-            />
-            <label>Address</label>
-            <input
-              type="text"
-              name="Address"
-              value={formData.Address}
-              onChange={handleChange}
-              placeholder="Enter property address"
-            />
-
-            <label>Price</label>
-            <input
-              type="text"
-              name="Price"
-              value={formData.Price}
-              onChange={handleChange}
-              placeholder="Enter property price"
-            />
-          </form>
-          <button type="submit">Submit</button>
-        </div>
-      </div>
-    </>
   );
 }
 
