@@ -1,46 +1,92 @@
+body {
+  font-family: "Roboto Mono", sans-serif;
+  color: #252525;
+  font-weight: 400;
+  background-color: #f7f2e9;
+  border-bottom: 1.6rem solid #256729;
+  min-height: 100vh;
+  padding: 3.2rem;
+  padding-bottom: 6rem;
+}
+
 .App {
   text-align: center;
-}
+  max-width: 80rem;
+  margin: 0 auto;
 
-.card-container {
-  display: flex;
-  justify-content: center;
-}
-
-.property-card {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  gap: 4.8rem;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4rem;
+}
+
+.properties {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10.8rem;
+}
+
+.property {
+  display: flex;
   border: 1px solid #ccc;
   border-radius: 8px;
-  padding: 16px;
-  margin: 16px;
-  width: 300px;
 }
 
-.property-card img {
-  width: 200px;
-  height: auto;
+.property img {
+  width: 12rem;
+  aspect-ratio: 1;
+  align-self: start;
   object-fit: cover;
-  border-radius: 8px;
-  margin-right: 16px;
-  margin-bottom: 16px;
 }
 
-.property-card .details {
+.property div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  padding: 8px 24px;
   text-align: center;
 }
 
-.property-card .address {
-  font-size: 18px;
-  margin-top: 12px;
+.property p {
+  font-size: 1.4rem;
+  font-weight: 300;
+  font-style: italic;
+  margin-bottom: auto;
+  text-align: center;
 }
 
-.property-card .price {
-  font-size: 16px;
-  color: green;
+.property span {
+  display: block;
+  font-size: 24px;
+  color: #256729;
   margin-top: 8px;
+}
+
+@media (max-width: 768px) {
+  .properties {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding-left: 0; /* Remove left padding */
+    padding-right: 0; /* Remove right padding */
+    justify-content: center;
+  }
+
+  .properties p {
+    font-size: 18px;
+    margin-bottom: initial;
+  }
+
+  .properties span {
+    font-size: 18px;
+  }
 }
 
 .button-container {

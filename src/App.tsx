@@ -56,31 +56,35 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Welcome to our property website!</h1>
-      <div className="button-container">
-        <button onClick={() => setShowModal(true)}>Add Property</button>
-      </div>
-      {loading ? (
-        <p>Loading...</p>
-      ) : properties.length === 0 ? (
-        <p>No properties found</p>
-      ) : (
-        <PropertyList properties={properties} />
-      )}
-      {showModal && (
-        <PropertyForm
-          onSubmit={handleAddProperty}
-          onClose={() => setShowModal(false)}
-          showModal={showModal}
-        />
-      )}
+      <header>
+        <h1>Welcome to our property website!</h1>
+      </header>
+      <main className="main">
+        <div className="button-container">
+          <button onClick={() => setShowModal(true)}>Add Property</button>
+        </div>
+        {loading ? (
+          <p>Loading...</p>
+        ) : properties.length === 0 ? (
+          <p>No properties found</p>
+        ) : (
+          <PropertyList properties={properties} />
+        )}
+        {showModal && (
+          <PropertyForm
+            onSubmit={handleAddProperty}
+            onClose={() => setShowModal(false)}
+            showModal={showModal}
+          />
+        )}
+      </main>
     </div>
   );
 }
 
 function PropertyList({ properties }: any) {
   return (
-    <ul>
+    <ul className="properties">
       {properties.map((property: any) => (
         <PropertyCard property={property} />
       ))}
@@ -92,15 +96,13 @@ function PropertyCard({ property }: any) {
   if (!property) return null;
 
   return (
-    <div className="card-container">
-      <div className="property-card">
-        <img src={property.Image} alt="Advertised property" />
-        <div className="details">
-          <p className="address">Address: {property.Address}</p>
-          <span className="price">Price: {property.Price}</span>
-        </div>
+    <li className="property">
+      <img src={property.Image} alt="Advertised property" />
+      <div>
+        <p>{property.Address}</p>
+        <span className="price">{property.Price}</span>
       </div>
-    </div>
+    </li>
   );
 }
 
