@@ -4,39 +4,75 @@ import "./App.css";
 function App() {
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch(
-          "https://properties-api-aa2cb0dedf98.herokuapp.com/properties"
-        );
-
-        if (!res.ok) {
-          throw new Error("Something went wrong.");
-        }
-
-        const data = await res.json();
-        setProperties(data);
-      } catch (err) {
-        console.error("Error fetching data: ", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchData();
   }, []);
+
+  const fetchData = async () => {
+    try {
+      const res = await fetch(
+        "https://properties-api-aa2cb0dedf98.herokuapp.com/properties"
+      );
+
+      if (!res.ok) {
+        throw new Error("Something went wrong.");
+      }
+
+      const data = await res.json();
+      setProperties(data);
+    } catch (err) {
+      console.error("Error fetching data: ", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleAddProperty = async (formData: any) => {
+    try {
+      const res = await fetch(
+        "https://properties-api-aa2cb0dedf98.herokuapp.com/properties",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+
+      if (!res.ok) {
+        throw new Error("Failed to add property.");
+      }
+
+      setShowModal(false);
+      await fetchData();
+      alert("Property was added");
+    } catch (err) {
+      console.error("Error adding property: ", err);
+    }
+  };
 
   return (
     <div className="App">
       <h1>Welcome to our property website!</h1>
+      <div className="button-container">
+        <button onClick={() => setShowModal(true)}>Add Property</button>
+      </div>
       {loading ? (
         <p>Loading...</p>
       ) : properties.length === 0 ? (
         <p>No properties found</p>
       ) : (
         <PropertyList properties={properties} />
+      )}
+      {showModal && (
+        <PropertyForm
+          onSubmit={handleAddProperty}
+          onClose={() => setShowModal(false)}
+          showModal={showModal}
+        />
       )}
     </div>
   );
@@ -54,7 +90,6 @@ function PropertyList({ properties }: any) {
 
 function PropertyCard({ property }: any) {
   if (!property) return null;
-  console.log(property);
 
   return (
     <div className="card-container">
@@ -64,6 +99,65 @@ function PropertyCard({ property }: any) {
           <p className="address">Address: {property.Address}</p>
           <span className="price">Price: {property.Price}</span>
         </div>
+      </div>
+    </div>
+  );
+}
+
+function PropertyForm({ onSubmit, onClose, showModal }: any) {
+  const [formData, setFormData] = useState({
+    Image: "",
+    Address: "",
+    Price: "",
+  });
+
+  const handleChange = (e: any) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    onSubmit(formData);
+  };
+
+  return (
+    <div className={`modal ${showModal ? "show" : ""}`}>
+      <div className="modal-content">
+        <span className="close" onClick={onClose}>
+          &times;
+        </span>
+        <h2>Add Property</h2>
+        <form onSubmit={handleSubmit}>
+          <label>
+            Image URL:
+            <input
+              type="text"
+              name="Image"
+              value={formData.Image}
+              onChange={handleChange}
+            />
+          </label>
+          <label>
+            Address:
+            <input
+              type="text"
+              name="Address"
+              value={formData.Address}
+              onChange={handleChange}
+            />
+          </label>
+          <label>
+            Price:
+            <input
+              type="text"
+              name="Price"
+              value={formData.Price}
+              onChange={handleChange}
+            />
+          </label>
+          <button type="submit">Submit</button>
+        </form>
       </div>
     </div>
   );
