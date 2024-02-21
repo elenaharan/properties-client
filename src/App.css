@@ -70,25 +70,6 @@ body {
   margin-top: 8px;
 }
 
-@media (max-width: 768px) {
-  .properties {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    padding-left: 0;
-    padding-right: 0;
-    justify-content: center;
-  }
-
-  .properties p {
-    font-size: 18px;
-    margin-bottom: initial;
-  }
-
-  .properties span {
-    font-size: 18px;
-  }
-}
-
 .button-container {
   margin-bottom: 16px;
 }
@@ -184,4 +165,31 @@ button:hover {
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .properties {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding-left: 0;
+    padding-right: 0;
+    justify-content: center;
+  }
+
+  .properties p {
+    font-size: 18px;
+    margin-bottom: initial;
+  }
+
+  .properties span {
+    font-size: 18px;
+  }
+
+  .modal.show {
+    width: 20rem;
+  }
+
+  .form {
+    font-size: 14px;
+  }
 }
