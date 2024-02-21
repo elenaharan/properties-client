@@ -52,8 +52,8 @@ export default function PropertyForm({ onSubmit, onClose, showModal }: any) {
               onChange={handleChange}
               placeholder="Enter property price"
             />
+            <button type="submit">Submit</button>
           </form>
-          <button type="submit">Submit</button>
         </div>
       </div>
     </>
