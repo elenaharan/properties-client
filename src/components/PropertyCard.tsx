@@ -3,12 +3,14 @@ import { PropertyCardProps } from "../types/types";
 export default function PropertyCard({ property }: PropertyCardProps) {
   if (!property) return null;
 
-  const formattedPrice = new Intl.NumberFormat("en-GB", {
-    style: "currency",
-    currency: "GBP",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(property.Price);
+  const formattedPrice =
+    property.Price &&
+    new Intl.NumberFormat("en-GB", {
+      style: "currency",
+      currency: "GBP",
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(property.Price);
 
   return (
     <li className="property">

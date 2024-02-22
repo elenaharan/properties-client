@@ -2,7 +2,7 @@ export type Property = {
   Address: string;
   _id?: string;
   Image: string;
-  Price: number;
+  Price?: number;
   Property_ID?: number;
 };
 

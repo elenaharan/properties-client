@@ -9,7 +9,7 @@ export default function PropertyForm({
   const [formData, setFormData] = useState({
     Image: "",
     Address: "",
-    Price: 0,
+    Price: undefined,
   });
 
   const [imageFilled, setImageFilled] = useState(false);
@@ -31,6 +31,11 @@ export default function PropertyForm({
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (formData.Price && Number(formData.Price) <= 0) {
+      alert("Price must be greater than 0");
+      return;
+    }
     onSubmit(formData);
   };
 
@@ -65,7 +70,7 @@ export default function PropertyForm({
 
             <label>Price</label>
             <input
-              type="text"
+              type="number"
               name="Price"
               value={formData.Price}
               onChange={handleChange}
