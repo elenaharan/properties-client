@@ -12,15 +12,29 @@ export default function PropertyForm({
     Price: 0,
   });
 
+  const [imageFilled, setImageFilled] = useState(false);
+  const [addressFilled, setAddressFilled] = useState(false);
+  const [priceFilled, setPriceFilled] = useState(false);
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+
+    if (name === "Image") {
+      setImageFilled(!!value);
+    } else if (name === "Address") {
+      setAddressFilled(!!value);
+    } else if (name === "Price") {
+      setPriceFilled(!!value);
+    }
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSubmit(formData);
   };
+
+  const isSubmitDisabled = !imageFilled || !addressFilled || !priceFilled;
 
   return (
     <>
@@ -57,7 +71,9 @@ export default function PropertyForm({
               onChange={handleChange}
               placeholder="Enter property price"
             />
-            <button type="submit">Submit</button>
+            <button type="submit" disabled={isSubmitDisabled}>
+              Submit
+            </button>
           </form>
         </div>
       </div>
