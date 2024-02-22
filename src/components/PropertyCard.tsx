@@ -1,4 +1,6 @@
-export default function PropertyCard({ property }: any) {
+import { PropertyCardProps } from "../types/types";
+
+export default function PropertyCard({ property }: PropertyCardProps) {
   if (!property) return null;
 
   const formattedPrice = new Intl.NumberFormat("en-GB", {

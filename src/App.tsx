@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import type { Property } from "./types/types";
 import Header from "./components/Header";
 import Main from "./components/Main";
 
@@ -31,7 +32,7 @@ function App() {
     }
   };
 
-  const handleAddProperty = async (formData: any) => {
+  const handleAddProperty = async (formData: Property) => {
     try {
       const res = await fetch(
         "https://properties-api-aa2cb0dedf98.herokuapp.com/properties",

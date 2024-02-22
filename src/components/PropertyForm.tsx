@@ -1,18 +1,23 @@
-import { useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
+import { PropertyFormProps } from "../types/types";
 
-export default function PropertyForm({ onSubmit, onClose, showModal }: any) {
+export default function PropertyForm({
+  onSubmit,
+  onClose,
+  showModal,
+}: PropertyFormProps) {
   const [formData, setFormData] = useState({
     Image: "",
     Address: "",
-    Price: "",
+    Price: 0,
   });
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSubmit(formData);
   };

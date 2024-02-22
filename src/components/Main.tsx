@@ -1,3 +1,4 @@
+import { MainProps } from "../types/types";
 import PropertyForm from "./PropertyForm";
 import PropertyList from "./PropertyList";
 
@@ -7,7 +8,7 @@ export default function Main({
   properties,
   showModal,
   handleAddProperty,
-}: any) {
+}: MainProps) {
   return (
     <main className="main">
       <div className="button-container">
