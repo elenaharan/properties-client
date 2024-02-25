@@ -195,8 +195,22 @@ button[disabled] {
   }
 
   .form {
+    display: grid;
     font-size: 14px;
     grid-template-columns: 1fr;
+    align-items: center;
     gap: 24px;
+
+    & input {
+      padding: 12px 16px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    & ::placeholder {
+      color: #d3c7c3;
+      font-size: 14px;
+    }
   }
 }
